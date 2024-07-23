@@ -13,6 +13,10 @@ function App() {
   // API call, so useEffect() to handle
   // useEffect(() => { fetchImages(); }, []);
 
+  const handleCardClick = (id) => {
+    console.log(`card ${id} clicked`);
+  };
+
   return (
     <div className='app'>
       <Header currentScore={currentScore} highestScore={highestScore} />

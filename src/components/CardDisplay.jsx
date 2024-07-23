@@ -3,15 +3,10 @@ import Card from '../components/Card';
 
 function CardDisplay({ cards, onCardClick }) {
   return (
-    <div className='cardDisplay'>
+    <div className='card-display'>
       {cards.forEach((card) => {
         return (
-          <Card
-            className='card'
-            image={card.image}
-            text={card.text}
-            onClick={onCardClick}
-          />
+          <Card image={card.image} text={card.text} onClick={onCardClick} />
         );
       })}
     </div>
