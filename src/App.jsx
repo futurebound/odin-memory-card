@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 import Header from './components/Header';
@@ -9,9 +9,29 @@ function App() {
   const [clickedCards, setClickedCards] = useState([]);
   const [currentScore, setCurrentScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
+  const [initialRender, setInitialRender] = useState(true);
 
   // API call, so useEffect() to handle
-  // useEffect(() => { fetchImages(); }, []);
+  useEffect(() => {
+    if (initialRender) fetchImages();
+  }, []);
+
+  const fetchImages = async () => {
+    // API call to Giphhy
+    const endpoint = 'https://api.giphy.com/v1/gifs/search';
+    const params = {
+      apiKey: import.meta.env.VITE_GIPHY_KEY,
+      term: 'nature',
+      limit: 12,
+      rating: 'g',
+    };
+    const queryUri = `?api_key=${params.apiKey}&q=${params.term}&limit=${params.limit}&rating=${params.rating}`;
+    const response = await fetch(`${endpoint}${queryUri}`);
+    const data = await response.json();
+    data
+      // so we don't keep requesting images
+      .setInitialRender(false);
+  };
 
   const handleCardClick = (id) => {
     console.log(`card ${id} clicked`);
