@@ -1,6 +1,38 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.header {
+  display: flex;
+  gap: 16px;
+  padding: 8px;
+}
+
+.header h1 {
+  font-size: x-large;
+}
+
+.header h2 {
+  font-size: large;
+}
+
+p {
+  font-size: small;
+}
+
+/* testing */
+.header,
+.instructions,
+.scoreboard,
+.card-display,
+.card {
+  border: 1px white solid;
 }
