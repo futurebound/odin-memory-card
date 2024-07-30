@@ -27,10 +27,19 @@ function App() {
     };
     const queryUri = `?api_key=${params.apiKey}&q=${params.term}&limit=${params.limit}&rating=${params.rating}`;
     const response = await fetch(`${endpoint}${queryUri}`);
-    const data = await response.json();
-    data
-      // so we don't keep requesting images
-      .setInitialRender(false);
+    const parsed = await response.json();
+    parsed.data.forEach((gif) => {
+      const cardData = {
+        id: gif.id,
+        image: gif.url,
+        text: gif.title,
+      };
+
+      setCards(...cards);
+    });
+
+    // so we don't keep requesting images
+    setInitialRender(false);
   };
 
   const handleCardClick = (id) => {
