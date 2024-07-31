@@ -9,14 +9,13 @@ function App() {
   const [clickedCards, setClickedCards] = useState([]);
   const [currentScore, setCurrentScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
-  const [initialRender, setInitialRender] = useState(true);
 
   // API call, so useEffect() to handle
   useEffect(() => {
-    if (initialRender) fetchImages();
+    fetchImages();
   }, []);
 
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     try {
       const endpoint = 'https://api.giphy.com/v1/gifs/search';
       const params = {
@@ -32,20 +31,33 @@ function App() {
       const newCards = parsed.data.map((item) => ({
         id: item.id,
         image: item.images.fixed_height.url,
-        text: item.title || 'Nature scene',
+        text: item.title || 'Nature gif',
       }));
 
       setCards(newCards);
     } catch (error) {
       console.error('error fetching images: ', error);
     }
-
-    // so we don't keep requesting images
-    setInitialRender(false);
-  };
+  }, []);
 
   const handleCardClick = (id) => {
-    console.log(`card ${id} clicked`);
+    // Game is over if click on a card user clicked already
+    if (clickedCards.includes(id)) {
+      if (currentScore > highestScore) {
+        setHighestScore(currentScore);
+      }
+
+      setCurrentScore(0);
+      setClickedCards([]);
+    } else {
+      setClickedCards([...clickedCards, id]);
+      setCurrentScore(currentScore + 1);
+      shuffleCards();
+    }
+  };
+
+  const shuffleCards = () => {
+    console.log('shuffling cards...');
   };
 
   return (

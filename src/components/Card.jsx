@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-function Card({ image, text, onClick }) {
+function Card({ id, image, text, onClick }) {
   return (
-    <div className='card' onClick={onClick}>
+    <div className='card' onClick={() => onClick(id)}>
       <img src={image} alt={text} />
       <div className='card-text'>{text}</div>
     </div>
