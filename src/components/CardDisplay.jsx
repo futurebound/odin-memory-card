@@ -4,8 +4,9 @@ import Card from '../components/Card';
 function CardDisplay({ cards, onCardClick }) {
   return (
     <div className='card-display'>
-      {cards.forEach((card) => {
+      {cards.map((card) => {
         return (
+          // eslint-disable-next-line react/jsx-key
           <Card image={card.image} text={card.text} onClick={onCardClick} />
         );
       })}
