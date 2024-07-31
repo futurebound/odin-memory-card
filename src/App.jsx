@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 import Header from './components/Header';
@@ -13,7 +13,7 @@ function App() {
   // API call, so useEffect() to handle
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, [fetchImages]);
 
   const fetchImages = useCallback(async () => {
     try {
@@ -40,15 +40,19 @@ function App() {
     }
   }, []);
 
+  const resetGame = () => {
+    setCurrentScore(0);
+    setClickedCards([]);
+    fetchImages();
+  };
+
   const handleCardClick = (id) => {
     // Game is over if click on a card user clicked already
     if (clickedCards.includes(id)) {
       if (currentScore > highestScore) {
         setHighestScore(currentScore);
       }
-
-      setCurrentScore(0);
-      setClickedCards([]);
+      resetGame();
     } else {
       setClickedCards([...clickedCards, id]);
       setCurrentScore(currentScore + 1);
