@@ -17,29 +17,27 @@ function App() {
   }, []);
 
   const fetchImages = async () => {
-    // API call to Giphhy
-    // const endpoint = 'https://api.giphy.com/v1/gifs/search';
-    // const params = {
-    //   apiKey: import.meta.env.VITE_GIPHY_KEY,
-    //   term: 'nature',
-    //   limit: 12,
-    //   rating: 'g',
-    // };
-    // const queryUri = `?api_key=${params.apiKey}&q=${params.term}&limit=${params.limit}&rating=${params.rating}`;
-    // const response = await fetch(`${endpoint}${queryUri}`);
-    // const parsed = await response.json();
-    // parsed.data.forEach((gif) => {
-    //   const cardData = {
-    //     id: gif.id,
-    //     image: gif.url,
-    //     text: gif.title,
-    //   };
+    try {
+      const endpoint = 'https://api.giphy.com/v1/gifs/search';
+      const params = {
+        apiKey: import.meta.env.VITE_GIPHY_KEY,
+        term: 'nature',
+        limit: 12,
+        rating: 'g',
+      };
+      const queryUri = `?api_key=${params.apiKey}&q=${params.term}&limit=${params.limit}&rating=${params.rating}`;
+      const response = await fetch(`${endpoint}${queryUri}`);
+      const parsed = await response.json();
 
-    //   setCards(...cards);
-    // });
-    for (let i = 0; i < 12; i++) {
+      const newCards = parsed.data.map((item) => ({
+        id: item.id,
+        image: item.images.fixed_height.url,
+        text: item.title || 'Nature scene',
+      }));
 
-      setCards(...cards, { id: i, image: 'https://placehold.co/200x300', text: 'card' });
+      setCards(newCards);
+    } catch (error) {
+      console.error('error fetching images: ', error);
     }
 
     // so we don't keep requesting images
