@@ -10,11 +10,6 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
 
-  // API call, so useEffect() to handle
-  useEffect(() => {
-    fetchImages();
-  }, [fetchImages]);
-
   const fetchImages = useCallback(async () => {
     try {
       const endpoint = 'https://api.giphy.com/v1/gifs/search';
@@ -39,6 +34,11 @@ function App() {
       console.error('error fetching images: ', error);
     }
   }, []);
+
+  // API call, so useEffect() to handle
+  useEffect(() => {
+    fetchImages();
+  }, [fetchImages]);
 
   const resetGame = () => {
     setCurrentScore(0);

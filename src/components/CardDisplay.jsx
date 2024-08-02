@@ -10,7 +10,7 @@ function CardDisplay({ cards, onCardClick }) {
           id={card.id}
           image={card.image}
           text={card.text}
-          onClick={onCardClick(card.id)}
+          onClick={onCardClick}
         />
       ))}
     </div>
