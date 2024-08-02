@@ -10,6 +10,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
 
+  // memoize to ensure API call made when component mounts
   const fetchImages = useCallback(async () => {
     try {
       const endpoint = 'https://api.giphy.com/v1/gifs/search';
@@ -35,7 +36,7 @@ function App() {
     }
   }, []);
 
-  // API call, so useEffect() to handle
+  // calling memoized fetchImages(), only called in resetGame()
   useEffect(() => {
     fetchImages();
   }, [fetchImages]);
@@ -61,7 +62,15 @@ function App() {
   };
 
   const shuffleCards = () => {
-    console.log('shuffling cards...');
+    const shuffled = [...cards];
+    for (let oldIndex = shuffled.lenght - 1; oldIndex > 0; oldIndex--) {
+      const newIndex = Math.floor(Math.random() * (oldIndex + 1));
+      [shuffled[oldIndex], shuffled[newIndex]] = [
+        shuffled[newIndex],
+        shuffled[oldIndex],
+      ];
+    }
+    setCards(shuffled);
   };
 
   return (

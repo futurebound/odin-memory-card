@@ -7,7 +7,7 @@
 
 .app {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .header {
@@ -35,4 +35,9 @@ p {
 .card-display,
 .card {
   border: 1px white solid;
+}
+
+.card-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
