@@ -63,7 +63,7 @@ function App() {
 
   const shuffleCards = () => {
     const shuffled = [...cards];
-    for (let oldIndex = shuffled.lenght - 1; oldIndex > 0; oldIndex--) {
+    for (let oldIndex = shuffled.length - 1; oldIndex > 0; oldIndex--) {
       const newIndex = Math.floor(Math.random() * (oldIndex + 1));
       [shuffled[oldIndex], shuffled[newIndex]] = [
         shuffled[newIndex],
